@@ -1,7 +1,8 @@
 from embeddings.loader import ChunkLoader
 from embeddings.embedder import Embedder
+from vectordb.vector_db import VectorDB
 
-loader = ChunkLoader("data/chunks/byarticle")
+loader = ChunkLoader("data/chunks")
 
 chunks = loader.load()
 
@@ -9,5 +10,10 @@ embedder = Embedder()
 
 embeddings = embedder.embed_chunks(chunks)
 
-print(len(embeddings))
-print(len(embeddings[0]))
+db = VectorDB()
+
+db.reset()
+
+db.add_chunks(chunks, embeddings)
+
+print(db.count())
