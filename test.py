@@ -1,22 +1,30 @@
 from retrieval.retriever import Retriever
+from retrieval.context_builder import ContextBuilder
+from llm.prompt_builder import PromptBuilder
+
 
 retriever = Retriever()
+context_builder = ContextBuilder()
+prompt_builder = PromptBuilder()
 
-results = retriever.search(
-    "how can i create a sarl in morocco?",
-    top_k=5
-)
 
-for i, chunk in enumerate(results, 1):
+question = "Comment créer une SARL au Maroc ?"
 
-    print("=" * 80)
+chunks = retriever.search(question, top_k=5)
 
-    print(f"Result {i}")
-    print(f"Score : {chunk['score']:.4f}")
-    print(f"Title : {chunk['metadata'].get('title')}")
-    print(f"Source: {chunk['metadata'].get('source')}")
-    print(f"Page  : {chunk['metadata'].get('page')}")
+context = context_builder.build(chunks)
 
-    print("-" * 80)
+prompt = prompt_builder.build(question, context)
 
-    print(chunk["text"][:500])
+
+print("=" * 100)
+print("CONTEXT")
+print("=" * 100)
+print(context)
+
+print("\n\n")
+
+print("=" * 100)
+print("PROMPT")
+print("=" * 100)
+print(prompt)
