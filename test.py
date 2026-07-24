@@ -1,19 +1,22 @@
-from embeddings.loader import ChunkLoader
-from embeddings.embedder import Embedder
-from vectordb.vector_db import VectorDB
+from retrieval.retriever import Retriever
 
-loader = ChunkLoader("data/chunks")
+retriever = Retriever()
 
-chunks = loader.load()
+results = retriever.search(
+    "how can i create a sarl in morocco?",
+    top_k=5
+)
 
-embedder = Embedder()
+for i, chunk in enumerate(results, 1):
 
-embeddings = embedder.embed_chunks(chunks)
+    print("=" * 80)
 
-db = VectorDB()
+    print(f"Result {i}")
+    print(f"Score : {chunk['score']:.4f}")
+    print(f"Title : {chunk['metadata'].get('title')}")
+    print(f"Source: {chunk['metadata'].get('source')}")
+    print(f"Page  : {chunk['metadata'].get('page')}")
 
-db.reset()
+    print("-" * 80)
 
-db.add_chunks(chunks, embeddings)
-
-print(db.count())
+    print(chunk["text"][:500])
