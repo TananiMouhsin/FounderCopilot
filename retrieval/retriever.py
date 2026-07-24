@@ -2,17 +2,22 @@ from chromadb import PersistentClient
 
 from embeddings.embedder import Embedder
 
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent.parent
+
+DB_PATH = ROOT / "data" / "chroma"
 
 class Retriever:
 
     def __init__(
         self,
+        embedder,
         db_path="data/chroma",
         collection_name="foundercopilot",
     ):
-        self.embedder = Embedder()
+        self.embedder = embedder
 
-        self.client = PersistentClient(path=db_path)
+        self.client = PersistentClient(path=str(DB_PATH))
 
         self.collection = self.client.get_collection(collection_name)
 
