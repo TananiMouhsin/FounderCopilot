@@ -2,7 +2,7 @@ from tools.rag_tool import RagTool
 
 rag = RagTool()
 
-result = rag.run(
+result = rag.invoke(
     "Comment créer une SARL au Maroc ?"
 )
 

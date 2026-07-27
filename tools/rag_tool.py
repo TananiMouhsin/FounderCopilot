@@ -16,7 +16,7 @@ class RagTool:
 
         print("RAG Tool Ready!")
 
-    def run(self, question: str, top_k: int = 5) -> dict:
+    def invoke(self, question: str, top_k: int = 5) -> dict:
         # 1. Retrieve relevant chunks
         chunks = self.retriever.search(question, top_k)
 
