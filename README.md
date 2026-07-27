@@ -53,7 +53,7 @@ FounderCopilot/
 ├── retrieval/
 ├── vectordb/
 ├── frontend/
-├── .env
+├── .env        
 ├── requirements.txt
 └── README.md
 ```

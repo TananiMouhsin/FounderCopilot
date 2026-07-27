@@ -99,7 +99,16 @@ function MessageActions({ content, onRegenerate }) {
 function Sources({ sources }) {
   const [expanded, setExpanded] = useState(true)
 
-  if (!sources || sources.length === 0) return null
+  // Remove invalid sources
+  const validSources = (sources || []).filter(
+    (src) =>
+      src &&
+      src.source &&
+      src.source !== "Unknown" &&
+      src.source !== "unknown"
+  )
+
+  if (validSources.length === 0) return null
 
   return (
     <div className="mt-3">
@@ -108,23 +117,27 @@ function Sources({ sources }) {
         className="flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-700 transition-colors mb-2 group"
       >
         <BookOpen className="w-3.5 h-3.5 text-primary-400 group-hover:text-primary-500 transition-colors" />
-        <span>{sources.length} source{sources.length > 1 ? 's' : ''}</span>
+        <span>
+          {validSources.length} source{validSources.length > 1 ? "s" : ""}
+        </span>
+
         {expanded ? (
           <ChevronUp className="w-3 h-3" />
         ) : (
           <ChevronDown className="w-3 h-3" />
         )}
       </button>
+
       <AnimatePresence>
         {expanded && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-2 overflow-hidden"
           >
-            {sources.map((src, i) => (
+            {validSources.map((src, i) => (
               <SourceCard key={i} source={src} index={i} />
             ))}
           </motion.div>

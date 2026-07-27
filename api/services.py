@@ -1,8 +1,8 @@
-from embeddings.embedder import Embedder
-from retrieval.retriever import Retriever
-from retrieval.context_builder import ContextBuilder
-from llm.prompt_builder import PromptBuilder
-from llm.generator import Generator
+from rag.embeddings.embedder import Embedder
+from rag.retrieval.retriever import Retriever
+from rag.retrieval.context_builder import ContextBuilder
+from rag.llm.prompt_builder import PromptBuilder
+from rag.llm.generator import Generator
 
 
 class FounderCopilotService:
