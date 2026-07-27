@@ -1,5 +1,6 @@
 from tools.rag_tool import RagTool
 
+
 rag_tool = RagTool()
 
 
@@ -13,3 +14,4 @@ def rag_node(state):
         "prompt": result["prompt"],
         "tool": "rag"
     }
+
