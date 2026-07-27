@@ -13,3 +13,5 @@ class AgentState(TypedDict):
     context: str
 
     prompt: str
+
+    sources: list
