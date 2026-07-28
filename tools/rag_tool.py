@@ -32,10 +32,34 @@ class RagTool:
         # 4. Generate answer
         answer = self.generator.generate(prompt)
 
+        sources = []
+        seen = set()
+
+        for chunk in chunks:
+
+            source = {
+                "title": chunk.get("title", "Unknown"),
+                "source": chunk.get("source", "Unknown"),
+                "page_start": chunk.get("page_start", 0),
+                "page_end": chunk.get("page_end",0),
+            }
+
+            key = (
+                source["title"],
+                source["source"],
+                source["page_start"],
+                source["page_end"],
+            )
+
+            if key not in seen:
+                seen.add(key)
+                sources.append(source)
+            
         return {
             "question": question,
             "answer": answer,
             "chunks": chunks,
+            "sources": sources,
             "context": context,
             "prompt": prompt,
         }

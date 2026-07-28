@@ -1,36 +1,22 @@
-from rag.embeddings.embedder import Embedder
-from rag.retrieval.retriever import Retriever
-from rag.retrieval.context_builder import ContextBuilder
-from rag.llm.prompt_builder import PromptBuilder
-from rag.llm.generator import Generator
+from agent.graph import graph
 
 
 class FounderCopilotService:
 
     def __init__(self):
 
-        print("Loading FounderCopilot...")
+        print("Loading FounderCopilot Agent...")
 
-        self.embedder = Embedder()
+        self.agent = graph
 
-        self.retriever = Retriever(self.embedder)
-
-        self.context_builder = ContextBuilder()
-
-        self.prompt_builder = PromptBuilder()
-
-        self.generator = Generator()
-
-        print("FounderCopilot Ready!")
+        print("FounderCopilot Agent Ready!")
 
     def ask(self, question):
 
-        chunks = self.retriever.search(question)
+        result = self.agent.invoke(
+            {
+                "question": question
+            }
+        )
 
-        context = self.context_builder.build(chunks)
-
-        prompt = self.prompt_builder.build(question, context)
-
-        answer = self.generator.generate(prompt)
-
-        return answer, chunks
+        return result["answer"], result["sources"]

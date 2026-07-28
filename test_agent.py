@@ -1,7 +1,7 @@
 from agent.graph import graph
 
 result = graph.invoke({
-    "question": "who is tanani mouhsin ?"
+    "question": "hi what is the minimum wage in morocco "
 })
 
 print(result["answer"])
